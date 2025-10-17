@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Chi tiết đội bóng</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="all-classes-container">
+    <h2 class="text-center text-primary mb-4">Chi tiết đội bóng</h2>
+
+    <div class="form-floating mb-3">
+        <input type="text" readonly class="form-control-plaintext" id="name" th:value="${team.name}">
+        <label for="name">Tên đội bóng</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" readonly class="form-control-plaintext" id="country" th:value="${team.country}">
+        <label for="country">Quốc gia</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" readonly class="form-control-plaintext" id="coach" th:value="${team.coach}">
+        <label for="coach">Huấn luyện viên</label>
+    </div>
+
+    <div class="text-center" th:if="${mode == 'view'}">
+        <a th:href="@{/teams}" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+
+    <div th:if="${mode == 'delete'}">
+        <p class="text-danger fw-bold">Xác nhận xoá đội bóng?</p>
+        <a th:href="@{/teams/delete/{id}(id=${team.id})}" class="btn btn-danger">Xoá</a>
+        <a th:href="@{/teams}" class="btn btn-secondary">Huỷ</a>
+    </div>
+</div>
+</body>
+</html>

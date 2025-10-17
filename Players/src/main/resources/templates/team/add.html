@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Thêm mới đội bóng</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center md-4">Thêm mới đội bóng</h2>
+
+    <div th:if="${successMesage}" class="alert alert-success" role="alert" th:text="successMesage"></div>
+
+    <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+        <ul>
+            <li th:each="err : ${#fields.errors(*)}" th:text="${err}"></li>
+        </ul>
+    </div>
+
+    <form th:action="@{/team/add}" th:object="${team}" method="post" class="p-4 bg-white rounded shadow-sm">
+
+        <div class="form-floating mb-3">
+            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Tên đội bóng">
+            <label for="name">Tên đội bóng</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" th:field="*{country}" class="form-control" id="country" placeholder="Tên quốc gia">
+            <label for="name">Quốc gia</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" th:field="*{coach}" class="form-control" id="coach" placeholder="Tên huấn luyện viên">
+            <label for="name">Huấn luyện viên</label>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/teams" class="btn btn-secondary">Quay lại</a>
+            <button type="submit" class="btn btn-primary" th:text="${team.id} != null ? 'Cập nhật' : 'Thêm mới'"></button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

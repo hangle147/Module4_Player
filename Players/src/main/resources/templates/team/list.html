@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Danh sách đội bóng</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="all-classes-container">
+    <h1 class="text-center mb-4 text-primary">Danh sách đội bóng</h1>
+    <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark text-center">
+        <tr>
+            <th>ID</th>
+            <th>Tên đội bóng</th>
+            <th>Quốc gia</th>
+            <th>Huấn luyện viên</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="team : ${teams}">
+            <td th:text="${team.id}"></td>
+            <td th:text="${team.name}"></td>
+            <td th:text="${team.country}"></td>
+            <td th:text="${team.coach}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form method="get" th:action="@{/players}" class="mb-3 d-flex gap-2 align-items-center">
+        <input type="text" id="name" name="name" class="form-control" placeholder="Tìm kiếm" th:value="${name}">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </form>
+
+
+</div>
+
+</body>
+</html>

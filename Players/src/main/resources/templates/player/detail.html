@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Chi tiết cầu thủ</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="all-classes-container">
+    <h2 class="text-center text-primary mb-4">Chi tiết cầu thủ</h2>
+
+    <div class="text-center mb-4">
+        <img th:src="@{/${player.avatar}}" alt="avatar"
+             class="rounded-circle shadow"
+             style="width: 120px; height: 120px; object-fit: cover;">
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" readonly class="form-control-plaintext" id="name" th:value="${player.name}">
+        <label for="name">Họ và tên</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" readonly class="form-control-plaintext" id="birth"
+               th:value="${#temporals.format(player.dayOfBirth, 'dd-MM-yyyy')}">
+        <label for="birth">Ngày sinh</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" readonly class="form-control-plaintext" id="experience" th:value="${player.experience}">
+        <label for="experience">Kinh nghiệm</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" readonly class="form-control-plaintext" id="position" th:value="${player.position}">
+        <label for="position">Vị trí</label>
+    </div>
+
+    <div th:if="${playerDto.team != null}">
+        <hr>
+        <h5 class="text-success">Thông tin đội bóng</h5>
+        <p><strong>Tên đội:</strong> <span th:text="${playerDto.team.name}"></span></p>
+        <p><strong>Quốc gia:</strong> <span th:text="${playerDto.team.country}"></span></p>
+        <p><strong>Huấn luyện viên:</strong> <span th:text="${playerDto.team.coach}"></span></p>
+    </div>
+
+    <div class="text-center" th:if="${mode == 'view'}">
+        <a th:href="@{/players}" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+
+    <div th:if="${mode == 'delete'}">
+        <p class="text-danger fw-bold">Xác nhận xoá cầu thủ?</p>
+        <a th:href="@{/players/delete/{id}(id=${player.id})}" class="btn btn-danger">Xoá</a>
+        <a th:href="@{/players}" class="btn btn-secondary">Huỷ</a>
+    </div>
+</div>
+</body>
+</html>

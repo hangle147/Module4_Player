@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Thêm mới cầu thủ</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Thêm mới cầu thủ</h2>
+
+    <div th:if="${successMessage}" class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+
+    <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+        </ul>
+    </div>
+
+    <form th:action="@{/players/add}" th:object="${playerDto}" method="post" class="p-4 bg-white rounded shadow-sm">
+
+        <div class="form-floating mb-3">
+            <input type="text" th:field="*{avatar}" class="form-control" id="avatar" placeholder="URL ảnh đại diện">
+            <label for="avatar">Ảnh đại diện (URL)</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Tên cầu thủ" required>
+            <label for="name">Tên cầu thủ</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="date" th:field="*{dayOfBirth}" class="form-control" id="dayOfBirth" required>
+            <label for="dayOfBirth">Ngày sinh</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" th:field="*{experience}" class="form-control" id="experience" placeholder="Kinh nghiệm">
+            <label for="experience">Kinh nghiệm</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select th:field="*{position}" class="form-select" id="position" required>
+                <option value="" disabled selected>-- Chọn vị trí thi đấu --</option>
+                <option th:each="p : ${positions}" th:value="${p}" th:text="${p}"></option>
+            </select>
+            <label for="position">Vị trí thi đấu</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select th:field="*{status}" class="form-select" id="status" required>
+                <option value="" disabled>-- Chọn trạng thái --</option>
+                <option th:each="s : ${statuses}" th:value="${s}"
+                        th:text="${s == 'DU_BI' ? 'Dự bị' : 'Đã đăng ký'}"
+                        th:selected="${playerDto.status == s}"></option>
+            </select>
+            <label for="status">Trạng thái</label>
+        </div>
+
+        <div class="form-floating mb-4">
+            <select th:field="*{team}" class="form-select" id="team" required>
+                <option value="" disabled selected>-- Chọn đội bóng --</option>
+                <option th:each="t : ${teams}" th:value="${t}" th:text="${t.name}"></option>
+            </select>
+            <label for="team">Đội bóng</label>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/players" class="btn btn-secondary">Quay lại</a>
+            <button type="submit" class="btn btn-primary"
+                    th:text="${playerDto.id} != null ? 'Cập nhật' : 'Thêm mới'"></button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
